@@ -1,6 +1,7 @@
 package com.example.yd.stopwatch;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class StopwatchActivity extends AppCompatActivity {
+
+    private int seconds = 0;
+    private boolean running = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +23,8 @@ public class StopwatchActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //start our Handler
+        runTimmer();
     }
 
     @Override
@@ -40,5 +47,46 @@ public class StopwatchActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //start stopwatch
+    public void onClickStart(View view){
+        running = true;
+    }
+
+    //stop stopwatch
+    public void onClickStop(View view){
+        running = false;
+    }
+
+    //reset stopwatch
+    public void onClickReset(View view){
+        running = false;
+        seconds = 0;
+    }
+
+    private void runTimmer(){
+        final TextView textView = (TextView) findViewById(R.id.time_view);
+
+        final Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                int hours = seconds / 3600;
+                int minutes = (seconds%3600) / 60;
+                int secs = seconds%60;
+
+                String time = String.format("%d:%02d:%02d", hours, minutes, secs);
+                textView.setText(time);
+
+                if(running){
+                    seconds++;
+                }
+                //it will last again and again
+                handler.postDelayed(this,1000);
+            }
+        };
+        handler.post(runnable);
+
     }
 }
