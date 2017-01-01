@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 public class StopwatchActivity extends AppCompatActivity {
 
     private int seconds = 0;
@@ -83,6 +85,7 @@ public class StopwatchActivity extends AppCompatActivity {
     private void runTimmer(){
         final TextView textView = (TextView) findViewById(R.id.time_view);
 
+        //planning code execution
         final Handler handler = new Handler();
         Runnable runnable = new Runnable() {
             @Override
@@ -91,7 +94,7 @@ public class StopwatchActivity extends AppCompatActivity {
                 int minutes = (seconds%3600) / 60;
                 int secs = seconds%60;
 
-                String time = String.format("%d:%02d:%02d", hours, minutes, secs);
+                String time = String.format(Locale.getDefault(),"%d:%02d:%02d", hours, minutes, secs);
                 textView.setText(time);
 
                 if(running){
@@ -136,4 +139,5 @@ public class StopwatchActivity extends AppCompatActivity {
             running = true;
         }
     }
+
 }
