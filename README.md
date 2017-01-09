@@ -1,7 +1,5 @@
-# 2016.android.headfirstbook.04
+# Chapter 04. Activity.
 
-Name: Stopwatch.
-
-Discovering Activities states (onCreate, onDestroy, etc).
+Stopwatch. Activities states (onCreate, onDestroy, etc), Handler, Runnable.
 
 One TextView and three Buttons (Start, Stop, Reset).
